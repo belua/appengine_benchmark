@@ -18,9 +18,9 @@ type kinderBuilder interface {
 }
 
 func init() {
-	http.HandleFunc("/emptySequential", emptySequentialHandler)
 	http.HandleFunc("/emptyParallel", emptyParallelHandler)
-	http.HandleFunc("/delEmpty", delEmptyHandler)
+	http.HandleFunc("/empty", emptyHandler)
+	http.HandleFunc("/emptyDel", emptyDelHandler)
 	http.HandleFunc("/oneIndex", oneIndexHandler)
 	http.HandleFunc("/oneIndexDel", oneIndexDelHandler)
 	http.HandleFunc("/twoIndex", oneIndexHandler)

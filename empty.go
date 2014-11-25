@@ -17,7 +17,7 @@ func (b *emptyBuilder) build() kinder {
 	return &empty{}
 }
 
-func emptySequentialHandler(w http.ResponseWriter, r *http.Request) {
+func emptyHandler(w http.ResponseWriter, r *http.Request) {
 	b := &emptyBuilder{}
 	putKinderSequential(w, r, b)
 }
@@ -27,6 +27,6 @@ func emptyParallelHandler(w http.ResponseWriter, r *http.Request) {
 	putKinderParallel(w, r, b)
 }
 
-func delEmptyHandler(w http.ResponseWriter, r *http.Request) {
+func emptyDelHandler(w http.ResponseWriter, r *http.Request) {
 	delKind(w, r, (&empty{}).kind())
 }
