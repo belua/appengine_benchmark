@@ -23,12 +23,12 @@ func init() {
 	http.HandleFunc("/emptyDel", emptyDelHandler)
 	http.HandleFunc("/oneIndex", oneIndexHandler)
 	http.HandleFunc("/oneIndexDel", oneIndexDelHandler)
-	http.HandleFunc("/twoIndex", oneIndexHandler)
-	http.HandleFunc("/twoIndexDel", oneIndexDelHandler)
-	http.HandleFunc("/threeIndex", oneIndexHandler)
-	http.HandleFunc("/threeIndexDel", oneIndexDelHandler)
-	http.HandleFunc("/fourIndex", oneIndexHandler)
-	http.HandleFunc("/fourIndexDel", oneIndexDelHandler)
+	http.HandleFunc("/twoIndex", twoIndexHandler)
+	http.HandleFunc("/twoIndexDel", twoIndexDelHandler)
+	http.HandleFunc("/threeIndex", threeIndexHandler)
+	http.HandleFunc("/threeIndexDel", threeIndexDelHandler)
+	http.HandleFunc("/fourIndex", fourIndexHandler)
+	http.HandleFunc("/fourIndexDel", fourIndexDelHandler)
 }
 
 func putKinder(cxt appengine.Context, entity kinder, count int) error {
