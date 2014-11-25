@@ -21,6 +21,14 @@ func init() {
 	http.HandleFunc("/emptySequential", emptySequentialHandler)
 	http.HandleFunc("/emptyParallel", emptyParallelHandler)
 	http.HandleFunc("/delEmpty", delEmptyHandler)
+	http.HandleFunc("/oneIndex", oneIndexHandler)
+	http.HandleFunc("/oneIndexDel", oneIndexDelHandler)
+	http.HandleFunc("/twoIndex", oneIndexHandler)
+	http.HandleFunc("/twoIndexDel", oneIndexDelHandler)
+	http.HandleFunc("/threeIndex", oneIndexHandler)
+	http.HandleFunc("/threeIndexDel", oneIndexDelHandler)
+	http.HandleFunc("/fourIndex", oneIndexHandler)
+	http.HandleFunc("/fourIndexDel", oneIndexDelHandler)
 }
 
 func putKinder(cxt appengine.Context, entity kinder, count int) error {
