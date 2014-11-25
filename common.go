@@ -29,6 +29,8 @@ func init() {
 	http.HandleFunc("/threeIndexDel", threeIndexDelHandler)
 	http.HandleFunc("/fourIndex", fourIndexHandler)
 	http.HandleFunc("/fourIndexDel", fourIndexDelHandler)
+	http.HandleFunc("/monoIndex", monoIndexHandler)
+	http.HandleFunc("/monoIndexDel", monoIndexDelHandler)
 }
 
 func putKinder(cxt appengine.Context, entity kinder, count int) error {
