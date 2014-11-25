@@ -74,10 +74,11 @@ func putEmpty(cxt appengine.Context, count int) error {
 
 func delEmptyHandler(w http.ResponseWriter, r *http.Request) {
 	cxt := appengine.NewContext(r)
-	e := &empty{}
-	for i := 0; i < 4; i++ {
-		q := datastore.NewQuery(e.kind()).KeysOnly().Limit(delLimit)
-		keys, err := q.GetAll(cxt, make([]*empty, 0))
+	q := datastore.NewQuery((&empty{}).kind()).KeysOnly().Limit(delLimit)
+	var keys []*datastore.Key
+	var err error
+	for keys == nil || len(keys) > 0 {
+		keys, err = q.GetAll(cxt, make([]*empty, 0))
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			cxt.Infof("%s", err.Error())
