@@ -1,4 +1,4 @@
-package mercury
+package aebench
 
 import (
 	"appengine"
