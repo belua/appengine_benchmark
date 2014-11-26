@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"net/http"
 	"time"
+	"github.com/belua/httprouter"
 )
 
 // Entity with single indexable field
@@ -24,12 +25,12 @@ func (b *OneIndexBuilder) build() kinder {
 	return &OneIndex{b.r.Int63()}
 }
 
-func oneIndexHandler(w http.ResponseWriter, r *http.Request) {
+func oneIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &OneIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
 	putKinderSequential(w, r, b)
 }
 
-func oneIndexDelHandler(w http.ResponseWriter, r *http.Request) {
+func oneIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	delKind(w, r, (&OneIndex{}).kind())
 }
 
@@ -52,12 +53,12 @@ func (b *TwoIndexBuilder) build() kinder {
 	return &TwoIndex{b.r.Int63(), b.r.Int63()}
 }
 
-func twoIndexHandler(w http.ResponseWriter, r *http.Request) {
+func twoIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &TwoIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
 	putKinderSequential(w, r, b)
 }
 
-func twoIndexDelHandler(w http.ResponseWriter, r *http.Request) {
+func twoIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	delKind(w, r, (&TwoIndex{}).kind())
 }
 
@@ -81,12 +82,12 @@ func (b *ThreeIndexBuilder) build() kinder {
 	return &ThreeIndex{b.r.Int63(), b.r.Int63(), b.r.Int63()}
 }
 
-func threeIndexHandler(w http.ResponseWriter, r *http.Request) {
+func threeIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &ThreeIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
 	putKinderSequential(w, r, b)
 }
 
-func threeIndexDelHandler(w http.ResponseWriter, r *http.Request) {
+func threeIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	delKind(w, r, (&ThreeIndex{}).kind())
 }
 
@@ -111,11 +112,11 @@ func (b *FourIndexBuilder) build() kinder {
 	return &FourIndex{b.r.Int63(), b.r.Int63(), b.r.Int63(), b.r.Int63()}
 }
 
-func fourIndexHandler(w http.ResponseWriter, r *http.Request) {
+func fourIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &FourIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
 	putKinderSequential(w, r, b)
 }
 
-func fourIndexDelHandler(w http.ResponseWriter, r *http.Request) {
+func fourIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	delKind(w, r, (&FourIndex{}).kind())
 }

@@ -5,6 +5,7 @@ import (
 	"appengine/datastore"
 	"net/http"
 	"time"
+	"github.com/belua/httprouter"
 )
 
 const operationCount = 20
@@ -18,18 +19,20 @@ type kinderBuilder interface {
 }
 
 func init() {
-	http.HandleFunc("/empty", emptyHandler)
-	http.HandleFunc("/emptyDel", emptyDelHandler)
-	http.HandleFunc("/oneIndex", oneIndexHandler)
-	http.HandleFunc("/oneIndexDel", oneIndexDelHandler)
-	http.HandleFunc("/twoIndex", twoIndexHandler)
-	http.HandleFunc("/twoIndexDel", twoIndexDelHandler)
-	http.HandleFunc("/threeIndex", threeIndexHandler)
-	http.HandleFunc("/threeIndexDel", threeIndexDelHandler)
-	http.HandleFunc("/fourIndex", fourIndexHandler)
-	http.HandleFunc("/fourIndexDel", fourIndexDelHandler)
-	http.HandleFunc("/monoIndex", monoIndexHandler)
-	http.HandleFunc("/monoIndexDel", monoIndexDelHandler)
+	router := httprouter.New()
+	router.GET("/empty", emptyHandler)
+	router.GET("/emptyDel", emptyDelHandler)
+	router.GET("/oneIndex", oneIndexHandler)
+	router.GET("/oneIndexDel", oneIndexDelHandler)
+	router.GET("/twoIndex", twoIndexHandler)
+	router.GET("/twoIndexDel", twoIndexDelHandler)
+	router.GET("/threeIndex", threeIndexHandler)
+	router.GET("/threeIndexDel", threeIndexDelHandler)
+	router.GET("/fourIndex", fourIndexHandler)
+	router.GET("/fourIndexDel", fourIndexDelHandler)
+	router.GET("/monoIndex", monoIndexHandler)
+	router.GET("/monoIndexDel", monoIndexDelHandler)
+	http.Handle("/", router)
 }
 
 func putKinder(cxt appengine.Context, entity kinder, count int) error {
