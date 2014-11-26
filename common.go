@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-const operationCount = 200
+const operationCount = 20
 
 type kinder interface {
 	kind() string
