@@ -1,8 +1,8 @@
 package aebench
 
 import (
-	"net/http"
 	"github.com/belua/httprouter"
+	"net/http"
 )
 
 // Entity with single indexable field which increases monotonically
@@ -28,8 +28,4 @@ func (b *MonoIndexBuilder) build() kinder {
 func monoIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &MonoIndexBuilder{}
 	putKinderSequential(w, r, b)
-}
-
-func monoIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	delKind(w, r, (&MonoIndex{}).kind())
 }

@@ -1,8 +1,8 @@
 package aebench
 
 import (
-	"net/http"
 	"github.com/belua/httprouter"
+	"net/http"
 )
 
 type empty struct {
@@ -21,8 +21,4 @@ func (b *emptyBuilder) build() kinder {
 func emptyHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &emptyBuilder{}
 	putKinderSequential(w, r, b)
-}
-
-func emptyDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	delKind(w, r, (&empty{}).kind())
 }

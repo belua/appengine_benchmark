@@ -1,10 +1,10 @@
 package aebench
 
 import (
+	"github.com/belua/httprouter"
 	"math/rand"
 	"net/http"
 	"time"
-	"github.com/belua/httprouter"
 )
 
 // Entity with single indexable field
@@ -30,10 +30,6 @@ func oneIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params
 	putKinderSequential(w, r, b)
 }
 
-func oneIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	delKind(w, r, (&OneIndex{}).kind())
-}
-
 // Entity with two indexable fields
 
 type TwoIndex struct {
@@ -56,10 +52,6 @@ func (b *TwoIndexBuilder) build() kinder {
 func twoIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &TwoIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
 	putKinderSequential(w, r, b)
-}
-
-func twoIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	delKind(w, r, (&TwoIndex{}).kind())
 }
 
 // Entity with three indexable fields
@@ -87,10 +79,6 @@ func threeIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 	putKinderSequential(w, r, b)
 }
 
-func threeIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	delKind(w, r, (&ThreeIndex{}).kind())
-}
-
 // Entity with four indexable fields
 
 type FourIndex struct {
@@ -115,8 +103,4 @@ func (b *FourIndexBuilder) build() kinder {
 func fourIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &FourIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
 	putKinderSequential(w, r, b)
-}
-
-func fourIndexDelHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	delKind(w, r, (&FourIndex{}).kind())
 }
