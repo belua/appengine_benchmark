@@ -22,11 +22,6 @@ func emptyHandler(w http.ResponseWriter, r *http.Request) {
 	putKinderSequential(w, r, b)
 }
 
-func emptyParallelHandler(w http.ResponseWriter, r *http.Request) {
-	b := &emptyBuilder{}
-	putKinderParallel(w, r, b)
-}
-
 func emptyDelHandler(w http.ResponseWriter, r *http.Request) {
 	delKind(w, r, (&empty{}).kind())
 }

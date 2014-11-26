@@ -18,7 +18,6 @@ type kinderBuilder interface {
 }
 
 func init() {
-	http.HandleFunc("/emptyParallel", emptyParallelHandler)
 	http.HandleFunc("/empty", emptyHandler)
 	http.HandleFunc("/emptyDel", emptyDelHandler)
 	http.HandleFunc("/oneIndex", oneIndexHandler)
@@ -86,20 +85,4 @@ func delKind(w http.ResponseWriter, r *http.Request, kind string) {
 		}
 	}
 	cxt.Infof("Sucessfully Deleted %s: %d", kind, len(keys))
-}
-
-func putKinderParallel(w http.ResponseWriter, r *http.Request, kBuilder kinderBuilder) {
-	outerStart := time.Now()
-	cxt := appengine.NewContext(r)
-	complete := make(chan bool, operationCount)
-	for i := 0; i < operationCount; i++ {
-		go func(count int, entity kinder) {
-			if err := putKinder(cxt, entity, count); err != nil {
-				cxt.Infof("%s", err.Error())
-			}
-			complete <- true
-		}(i, kBuilder.build())
-	}
-	outerTotal := time.Now().Sub(outerStart)
-	cxt.Infof("Few Kinds %d Puts: %v", operationCount, outerTotal)
 }
