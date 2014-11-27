@@ -128,17 +128,20 @@ func loadHandler(w http.ResponseWriter, r *http.Request, params httprouter.Param
 		return
 	}
 	// url := "http://localhost:8080" + params.ByName("url")
-	url := "http://fiery-diorama-777.appspot.com/" + params.ByName("url")
+	url := "http://fiery-diorama-771.appspot.com" + params.ByName("url")
 	complete := make(chan bool, size)
 	for i := 0; i < size; i++ {
-		go func() {
+		go func(idx int) {
+			start := time.Now()
 			client := urlfetch.Client(cxt)
 			_, err := client.Get(url)
 			if err != nil {
 				cxt.Infof("URL Fetch error: %s", err.Error())
 			}
+			total := time.Now().Sub(start)
+			cxt.Infof("URL fetch %d complete in %v", idx, total)
 			complete <- true
-		}()
+		}(i)
 	}
 	for i := 0; i < size; i++ {
 		<-complete
