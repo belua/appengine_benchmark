@@ -25,5 +25,5 @@ func (b *MonoIndexBuilder) build(cxt appengine.Context) (*datastore.Key, interfa
 
 func monoIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &MonoIndexBuilder{}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }

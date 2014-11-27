@@ -25,7 +25,7 @@ func (b *OneIndexBuilder) build(cxt appengine.Context) (*datastore.Key, interfac
 
 func oneIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &OneIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }
 
 // Entity with two indexable fields
@@ -45,7 +45,7 @@ func (b *TwoIndexBuilder) build(cxt appengine.Context) (*datastore.Key, interfac
 
 func twoIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &TwoIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }
 
 // Entity with three indexable fields
@@ -66,7 +66,7 @@ func (b *ThreeIndexBuilder) build(cxt appengine.Context) (*datastore.Key, interf
 
 func threeIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &ThreeIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }
 
 // Entity with four indexable fields
@@ -88,5 +88,5 @@ func (b *FourIndexBuilder) build(cxt appengine.Context) (*datastore.Key, interfa
 
 func fourIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &FourIndexBuilder{rand.New(rand.NewSource(time.Now().UnixNano()))}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }

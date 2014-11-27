@@ -18,5 +18,5 @@ func (b *emptyBuilder) build(cxt appengine.Context) (*datastore.Key, interface{}
 
 func emptyHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &emptyBuilder{}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }

@@ -21,5 +21,5 @@ func (b *groupBuilder) build(cxt appengine.Context) (*datastore.Key, interface{}
 
 func groupHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &groupBuilder{}
-	putEntitySequential(w, r, b)
+	putEntities(w, r, b)
 }

@@ -52,7 +52,7 @@ func delKey(cxt appengine.Context, key *datastore.Key, count int) error {
 	return nil
 }
 
-func putEntitySequential(w http.ResponseWriter, r *http.Request, eBuilder entityBuilder) {
+func putEntities(w http.ResponseWriter, r *http.Request, eBuilder entityBuilder) {
 	outerStart := time.Now()
 	cxt := appengine.NewContext(r)
 	for i := 0; i < operationCount; i++ {
@@ -64,7 +64,8 @@ func putEntitySequential(w http.ResponseWriter, r *http.Request, eBuilder entity
 		}
 	}
 	outerTotal := time.Now().Sub(outerStart)
-	cxt.Infof("Few Kinds %d Puts: %v", operationCount, outerTotal)
+	key, _ := eBuilder.build(cxt)
+	cxt.Infof("Put %s: %d in %v", key.Kind(), operationCount, outerTotal)
 }
 
 func delHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -86,7 +87,7 @@ func delHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params
 		}
 	}
 	outerTotal := time.Now().Sub(outerStart)
-	cxt.Infof("Sucessfully Deleted %s: %d in %v", kind, len(keys), outerTotal)
+	cxt.Infof("Deleted %s: %d in %v", kind, len(keys), outerTotal)
 }
 
 func clearHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
@@ -111,7 +112,7 @@ func clearHandler(w http.ResponseWriter, r *http.Request, params httprouter.Para
 		}
 	}
 	outerTotal := time.Now().Sub(outerStart)
-	cxt.Infof("Sucessfully Cleared %s in %v", kind, outerTotal)
+	cxt.Infof("Cleared %s in %v", kind, outerTotal)
 }
 
 func loadHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
