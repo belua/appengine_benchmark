@@ -22,6 +22,7 @@ type kinderBuilder interface {
 
 func init() {
 	router := httprouter.New()
+	router.GET("/control", controlHandler)
 	router.GET("/empty", emptyHandler)
 	router.GET("/oneIndex", oneIndexHandler)
 	router.GET("/twoIndex", twoIndexHandler)
