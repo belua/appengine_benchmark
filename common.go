@@ -12,12 +12,8 @@ import (
 
 const operationCount = 20
 
-type kinder interface {
-	kind() string
-}
-
-type kinderBuilder interface {
-	build() kinder
+type entityBuilder interface {
+	build(appengine.Context) (*datastore.Key, interface{})
 }
 
 func init() {
@@ -35,14 +31,13 @@ func init() {
 	http.Handle("/", router)
 }
 
-func putKinder(cxt appengine.Context, entity kinder, count int) error {
+func putEntity(cxt appengine.Context, key *datastore.Key, entity interface{}, count int) error {
 	start := time.Now()
-	key := datastore.NewIncompleteKey(cxt, entity.kind(), nil)
 	if _, err := datastore.Put(cxt, key, entity); err != nil {
 		return err
 	}
 	total := time.Now().Sub(start)
-	cxt.Infof("%d %s Single Put: %v", count, entity.kind(), total)
+	cxt.Infof("%d %s Single Put: %v", count, key.Kind(), total)
 	return nil
 }
 
@@ -56,12 +51,12 @@ func delKey(cxt appengine.Context, key *datastore.Key, count int) error {
 	return nil
 }
 
-func putKinderSequential(w http.ResponseWriter, r *http.Request, kBuilder kinderBuilder) {
+func putEntitySequential(w http.ResponseWriter, r *http.Request, eBuilder entityBuilder) {
 	outerStart := time.Now()
 	cxt := appengine.NewContext(r)
 	for i := 0; i < operationCount; i++ {
-		entity := kBuilder.build()
-		if err := putKinder(cxt, entity, i); err != nil {
+		key, entity := eBuilder.build(cxt)
+		if err := putEntity(cxt, key, entity, i); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			cxt.Infof("%s", err.Error())
 			return

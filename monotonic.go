@@ -1,6 +1,8 @@
 package aebench
 
 import (
+	"appengine"
+	"appengine/datastore"
 	"github.com/belua/httprouter"
 	"net/http"
 )
@@ -11,21 +13,17 @@ type MonoIndex struct {
 	Index int64
 }
 
-func (i *MonoIndex) kind() string {
-	return "MonoIndex"
-}
-
 type MonoIndexBuilder struct {
 	indexVal int64
 }
 
-func (b *MonoIndexBuilder) build() kinder {
+func (b *MonoIndexBuilder) build(cxt appengine.Context) (*datastore.Key, interface{}) {
 	index := b.indexVal
 	b.indexVal++
-	return &MonoIndex{Index: index}
+	return datastore.NewIncompleteKey(cxt, "MonoIndex", nil), MonoIndex{Index: index}
 }
 
 func monoIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &MonoIndexBuilder{}
-	putKinderSequential(w, r, b)
+	putEntitySequential(w, r, b)
 }

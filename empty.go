@@ -1,6 +1,8 @@
 package aebench
 
 import (
+	"appengine"
+	"appengine/datastore"
 	"github.com/belua/httprouter"
 	"net/http"
 )
@@ -8,17 +10,13 @@ import (
 type empty struct {
 }
 
-func (e *empty) kind() string {
-	return "empty"
-}
-
 type emptyBuilder struct{}
 
-func (b *emptyBuilder) build() kinder {
-	return &empty{}
+func (b *emptyBuilder) build(cxt appengine.Context) (*datastore.Key, interface{}) {
+	return datastore.NewIncompleteKey(cxt, "empty", nil), &empty{}
 }
 
 func emptyHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b := &emptyBuilder{}
-	putKinderSequential(w, r, b)
+	putEntitySequential(w, r, b)
 }
