@@ -1,0 +1,6 @@
+queue:
+- name: perf-pull-queue
+  mode: pull
+  acl:
+  - user_email: f@belua.com
+  - writer_email: f@belua.com
