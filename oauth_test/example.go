@@ -19,7 +19,7 @@ func serviceAccountsJSON() {
 	// key file will then be downloaded to your computer.
 	opts, err := oauth2.New(
 		google.ServiceAccountJSONKey("clientsecret.json"),
-		oauth2.Scope("https://www.googleapis.com/auth/taskqueue"),
+		oauth2.Scope("https://www.googleapis.com/auth/cloud-taskqueue"),
 	)
 	if err != nil {
 		log.Fatal(err)
