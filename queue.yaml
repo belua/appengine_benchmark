@@ -4,4 +4,5 @@ queue:
   acl:
   - user_email: f@belua.com
   - writer_email: f@belua.com
+  - user_email: 327402269611-05qgr7brpna6od139ritvh03mhdbsamc@developer.gserviceaccount.com
   - writer_email: 327402269611-05qgr7brpna6od139ritvh03mhdbsamc@developer.gserviceaccount.com

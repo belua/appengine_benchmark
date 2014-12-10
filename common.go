@@ -3,6 +3,7 @@ package aebench
 import (
 	"appengine"
 	"appengine/datastore"
+	"appengine/taskqueue"
 	"appengine/urlfetch"
 	"github.com/belua/httprouter"
 	"net/http"
@@ -26,6 +27,7 @@ func init() {
 	router.GET("/fourIndex", fourIndexHandler)
 	router.GET("/monoIndex", monoIndexHandler)
 	router.GET("/group", groupHandler)
+	router.GET("/pullQueue", pullQueueHandler)
 	router.GET("/del/:kind", delHandler)
 	router.GET("/clear/:kind", clearHandler)
 	router.GET("/load/:size/*url", loadHandler)
@@ -145,4 +147,18 @@ func loadHandler(w http.ResponseWriter, r *http.Request, params httprouter.Param
 	}
 	outerTotal := time.Now().Sub(outerStart)
 	cxt.Infof("Loaded %s %d times in %v", url, size, outerTotal)
+}
+
+func addToQueue(w http.ResponseWriter, r *http.Request, queueName string, tasks ...*taskqueue.Task) {
+	cxt := appengine.NewContext(r)
+	outerStart := time.Now()
+	for _, task := range tasks {
+		if _, err := taskqueue.Add(cxt, task, queueName); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			cxt.Infof("%s", err.Error())
+			return
+		}
+	}
+	outerTotal := time.Now().Sub(outerStart)
+	cxt.Infof("Enqueued %d tasks onto %s in %v", len(tasks), queueName, outerTotal)
 }
