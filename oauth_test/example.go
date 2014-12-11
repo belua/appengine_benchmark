@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -29,7 +30,8 @@ func serviceAccountsJSON() {
 	// Initiate an http.Client. The following GET request will be
 	// authorized and authenticated on the behalf of
 	// your service account.
-	resp, err := client.Get("https://www.googleapis.com/taskqueue/v1beta2/projects/fiery-diorama-771/taskqueues/perf-pull-queue")
+	// resp, err := client.Get("https://www.googleapis.com/taskqueue/v1beta2/projects/fiery-diorama-771/taskqueues/perf-pull-queue/tasks/lease/")
+	resp, err := client.PostForm("https://www.googleapis.com/taskqueue/v1beta2/projects/fiery-diorama-771/taskqueues/perf-pull-queue/tasks/lease/", url.Values{"leaseSecs": {"10"}, "numTasks": {"100"}, "project": {"fiery-diorama-771"}, "taskqueue": {"perf-pull-queue"}})
 	if err != nil {
 		log.Fatal(err)
 	}
