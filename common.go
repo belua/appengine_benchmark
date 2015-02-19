@@ -26,6 +26,7 @@ func init() {
 	router.GET("/threeIndex", threeIndexHandler)
 	router.GET("/fourIndex", fourIndexHandler)
 	router.GET("/monoIndex", monoIndexHandler)
+	router.GET("/stringList", stringListHandler)
 	router.GET("/group", groupHandler)
 	router.GET("/pullQueue", pullQueueHandler)
 	router.GET("/del/:kind", delHandler)
